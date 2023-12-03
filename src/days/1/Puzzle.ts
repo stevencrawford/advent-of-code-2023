@@ -13,13 +13,13 @@ const first = (input: string) => {
   return calculate(input, numbers);
 };
 
-const expectedFirstSolution = '54597';
+const expectedFirstSolution = 54597;
 
 const second = (input: string) => {
   return calculate(input, numbersAndWords);
 };
 
-const expectedSecondSolution = '54504';
+const expectedSecondSolution = 54504;
 
 const calculate = (input: string, numbersToFind: StringNumber[]) => {
   return input.split('\n')
@@ -33,12 +33,11 @@ const calculate = (input: string, numbersToFind: StringNumber[]) => {
           acc[0] = minComparator(acc[0], current) < 0 ? acc[0] : current;
           acc[1] = maxComparator(acc[1], current) > 0 ? acc[1] : current;
           return acc;
-        },
-          [digitsWithIndexes[0], digitsWithIndexes[0]])
-        .reduce((accumulator, [digitAsStrings, index]) => 10 * (accumulator) + digitAsStrings[1], 0)
+        }, [digitsWithIndexes[0], digitsWithIndexes[0]])
+        .reduce((acc, [digitAsStrings, index]) => 10 * (acc) + digitAsStrings[1], 0)
         ;
     })
-    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    .reduce((acc, currentValue) => acc + currentValue, 0);
 }
 
 export { first, expectedFirstSolution, second, expectedSecondSolution };
