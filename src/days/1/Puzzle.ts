@@ -1,21 +1,13 @@
 type StringNumber = [string, number];
-<<<<<<< Updated upstream
-=======
 
 type StringNumberWithMinMaxIndexes = [StringNumber, [number, number]];
 
->>>>>>> Stashed changes
 const numbers: StringNumber[] = [['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5], ['6', 6], ['7', 7], ['8', 8], ['9', 9]];
 const words: StringNumber[] = [['one', 1], ['two', 2], ['three', 3], ['four', 4], ['five', 5], ['six', 6], ['seven', 7], ['eight', 8], ['nine', 9]];
 const numbersAndWords: StringNumber[] = [...numbers, ...words];
 
-<<<<<<< Updated upstream
-const minComparator = (a: [StringNumber, [number, number]], b: [StringNumber, [number, number]]) => a[1][0] - b[1][0];
-const maxComparator = (a: [StringNumber, [number, number]], b: [StringNumber, [number, number]]) => a[1][1] - b[1][1];
-=======
 const minComparator = (a: StringNumberWithMinMaxIndexes, b: StringNumberWithMinMaxIndexes) => a[1][0] - b[1][0];
 const maxComparator = (a: StringNumberWithMinMaxIndexes, b: StringNumberWithMinMaxIndexes) => a[1][1] - b[1][1];
->>>>>>> Stashed changes
 
 const first = (input: string) => {
   return calculate(input, numbers);
@@ -32,13 +24,8 @@ const expectedSecondSolution = '54504';
 const calculate = (input: string, numbersToFind: StringNumber[]) => {
   return input.split('\n')
     .map((line) => {
-<<<<<<< Updated upstream
-      let digitsWithIndexes: [StringNumber, [number, number]][] = numbersToFind
-        .map(([digit, _number]): [StringNumber, [number, number]] => [[digit, _number], [line.indexOf(digit), line.lastIndexOf(digit)]])
-=======
       let digitsWithIndexes: StringNumberWithMinMaxIndexes[] = numbersToFind
         .map(([digit, _number]): StringNumberWithMinMaxIndexes => [[digit, _number], [line.indexOf(digit), line.lastIndexOf(digit)]])
->>>>>>> Stashed changes
         .filter(([_, [min, max]]) => min > -1 && max > -1);
 
       return digitsWithIndexes
