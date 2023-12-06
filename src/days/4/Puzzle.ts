@@ -1,5 +1,3 @@
-import { match } from "assert";
-
 type Card = { id: number; winning: number[]; scratched: number[]; }
 
 const readCard = (line: string): Card => {
@@ -25,12 +23,38 @@ const first = (input: string) => {
     .reduce((acc, currentValue) => acc + currentValue, 0);
 };
 
-const expectedFirstSolution = 'solution 1';
+const expectedFirstSolution = 19855;
 
 const second = (input: string) => {
-  return 'solution 2';
+
+  let cards: Card[][] = []
+  const initializedCards = (index: number): Card[][] => {
+    if (!cards[index]) {
+      cards[index] = []
+    }
+    return cards;
+  }
+
+  let lines = input.split('\n');
+  lines.map((line) => {
+    let current = readCard(line)
+    initializedCards(current.id)[current.id].push(current)
+    const cardCount = cards[current.id].length
+
+    let matches = matchWinningNumbers(current.winning, current.scratched).length
+    Array.from({ length: matches },
+      (_, count) => {
+        let nextCardId = current.id + (count + 1)
+        if (nextCardId - 1 < lines.length) {
+          let nextCard = readCard(lines[nextCardId - 1])
+          Array.from({ length: cardCount }, () => initializedCards(nextCardId)[nextCardId].push(nextCard))
+        }
+      });
+  })
+
+  return cards.reduce((accumulator, current) => accumulator + current.length, 0);
 };
 
-const expectedSecondSolution = 'solution 2';
+const expectedSecondSolution = 10378710;
 
 export { first, expectedFirstSolution, second, expectedSecondSolution };
