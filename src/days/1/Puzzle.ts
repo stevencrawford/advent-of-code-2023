@@ -10,34 +10,34 @@ const minComparator = (a: StringNumberWithMinMaxIndexes, b: StringNumberWithMinM
 const maxComparator = (a: StringNumberWithMinMaxIndexes, b: StringNumberWithMinMaxIndexes) => a[1][1] - b[1][1];
 
 const first = (input: string) => {
-  return calculate(input, numbers);
+    return calculate(input, numbers);
 };
 
 const expectedFirstSolution = 54597;
 
 const second = (input: string) => {
-  return calculate(input, numbersAndWords);
+    return calculate(input, numbersAndWords);
 };
 
 const expectedSecondSolution = 54504;
 
 const calculate = (input: string, numbersToFind: StringNumber[]) => {
-  return input.split('\n')
-    .map((line) => {
-      let digitsWithIndexes: StringNumberWithMinMaxIndexes[] = numbersToFind
-        .map(([digit, _number]): StringNumberWithMinMaxIndexes => [[digit, _number], [line.indexOf(digit), line.lastIndexOf(digit)]])
-        .filter(([_, [min, max]]) => min > -1 && max > -1);
+    return input.split('\n')
+        .map((line) => {
+            const digitsWithIndexes: StringNumberWithMinMaxIndexes[] = numbersToFind
+                .map(([digit, _number]): StringNumberWithMinMaxIndexes => [[digit, _number], [line.indexOf(digit), line.lastIndexOf(digit)]])
+                .filter(([, [min, max]]) => min > -1 && max > -1);
 
-      return digitsWithIndexes
-        .reduce((acc, current) => {
-          acc[0] = minComparator(acc[0], current) < 0 ? acc[0] : current;
-          acc[1] = maxComparator(acc[1], current) > 0 ? acc[1] : current;
-          return acc;
-        }, [digitsWithIndexes[0], digitsWithIndexes[0]])
-        .reduce((acc, [digitAsStrings, index]) => 10 * (acc) + digitAsStrings[1], 0)
-        ;
-    })
-    .reduce((acc, currentValue) => acc + currentValue, 0);
-}
+            return digitsWithIndexes
+                .reduce((acc, current) => {
+                    acc[0] = minComparator(acc[0], current) < 0 ? acc[0] : current;
+                    acc[1] = maxComparator(acc[1], current) > 0 ? acc[1] : current;
+                    return acc;
+                }, [digitsWithIndexes[0], digitsWithIndexes[0]])
+                .reduce((acc, [digitAsStrings]) => 10 * (acc) + digitAsStrings[1], 0)
+                ;
+        })
+        .reduce((acc, currentValue) => acc + currentValue, 0);
+};
 
 export { first, expectedFirstSolution, second, expectedSecondSolution };
